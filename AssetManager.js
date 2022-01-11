@@ -2,6 +2,8 @@ include("AssetManager_Folder.js");
 include("AssetManager_ObjectCreator.js");
 include("AssetManager_Common.js");
 include("AssetManager_Container.js");
+include("AssetManager_WorldGrabber.js");
+
 
 mgraphics.init();
 mgraphics.relative_coords = 0;
@@ -13,6 +15,9 @@ var gObjCreator = new ObjectCreator(this.patcher);
 var gCommon = new Common();
 var gContainer = new Container(mgraphics);
 
+var gWorldGrabber = new WorldGrabber();
+gWorldGrabber.doSetDrawto("myWorld");
+
 // PUBLIC FUNCTIONS
 function remove_objects_created()
 {
@@ -23,7 +28,10 @@ function load_folder(path)
 {
     gFolderManager.LoadFolder(path);
     gFolderManager.SortFolder();
+    gFolderManager.CalcColumnRows();
+    gFolderManager.CalcFolderSize();
     gFolderManager.DisplayFolder();
+    gContainer.CheckIfDisplayScrollBar(gFolderManager.GetFolderSize())
     mgraphics.redraw();
 }
 
@@ -31,10 +39,14 @@ function load_folder(path)
 
 function paint()
 {   
-    gContainer.DrawTopBorder();
     gContainer.DrawBackground();
+    gContainer.DrawScrollBar();
+
+    gContainer.DrawTopBorder();
+
     if (gFolderManager.selectedFile.filePath)
     {   
+        gFolderManager.DrawSelectedHighlight(mgraphics);
         gContainer.DrawSelectedFileName(gFolderManager.selectedFile.filePath);
     }
     gFolderManager.DrawOffScreenBuffer(mgraphics);
@@ -43,24 +55,38 @@ function paint()
 function onresize(width, height)
 {	
 	gJSUISize = [width, height]; 
+    gFolderManager.CalcFolderSize();
     gFolderManager.DisplayFolder();
+    gContainer.SetScrollBarRect();
+    gContainer.CheckIfDisplayScrollBar(gFolderManager.GetFolderSize())
     mgraphics.redraw();
 }
 
 function ondrag(x,y,button)
 {
-    if (gFolderManager.selectedFile != null)
+    if (!button)
     {
-        if (!button)
+        if (gFolderManager.selectedFile != null)
         {
             gObjCreator.CreateObject([x,y], gFolderManager.selectedFile.filePath, gFolderManager.selectedFile.type);
         }
+        gContainer.SetScrollBarSliderUnclicked();
     }
+    if (gContainer.GetScrollBarSliderClicked())
+    {
+        gFolderManager.SetScrollBarOffset(gContainer.MoveScrollBarSlider(y));
+        gFolderManager.DisplayFolder();
+    }
+
+    gWorldGrabber.GetWindowSize();
+
+    mgraphics.redraw();
 }
 
 function onclick(x,y)
 {
     gFolderManager.CheckIfClicked([x,y]);
+    gContainer.CheckIfScrollBarSliderClicked([x,y]);
     mgraphics.redraw();
 }
 

@@ -22,9 +22,10 @@ function ObjectCreator(patcher)
         pos[0]+=box.rect[0];
         pos[1]+=box.rect[1];
 
-        if (!gCommon.CheckIfInside(pos, box.rect))
+        var jsuiBox = [box.rect[0], box.rect[1], gJSUISize[0], gJSUISize[1]];
+
+        if (!gCommon.CheckIfInside(pos, jsuiBox))
         {   
-            print(type)
             switch (type) 
             {
                 case "image":
