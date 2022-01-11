@@ -6,7 +6,7 @@ function Container(mg)
     this.border = [0,0,gJSUISize[0], 20];
     this.scrollBarWidth = 15;
     this.scrollBarHeight = 40;
-    this.mousePosY = this.border[3];
+    this.sliderTop = this.border[3];
     this.mouseYOffset = 0;
     this.folderUndisplayedPixels = 0;
 
@@ -14,7 +14,7 @@ function Container(mg)
     {
         clickedColor: [0.2, 0.2, 0.2, 1.0],
         unclickedColor: [0.7, 0.7, 0.75, 1.0],
-        rect: [gJSUISize[0]-this.scrollBarWidth, this.mousePosY, this.scrollBarWidth, this.scrollBarHeight],
+        rect: [gJSUISize[0]-this.scrollBarWidth, this.sliderTop, this.scrollBarWidth, this.scrollBarHeight],
         isClicked: false,
         isDisplayed: false
     }
@@ -71,7 +71,7 @@ function Container(mg)
             this.scrollBarSlider.isClicked = false;
             if (gCommon.CheckIfInside(mousePos, this.scrollBarSlider.rect))
             {   
-                this.mouseYOffset = mousePos[1]-this.mousePosY;
+                this.mouseYOffset = mousePos[1]-this.sliderTop;
                 this.scrollBarSlider.isClicked = true;
             }
         }
@@ -98,13 +98,11 @@ function Container(mg)
         var offsetVal = 0;
         if (this.scrollBarSlider.isClicked && this.scrollBarSlider.isDisplayed)
         {   
-            this.mousePosY = mouseY-this.mouseYOffset;
-            this.mousePosY = Math.min(gJSUISize[1]-this.scrollBarHeight, Math.max(this.border[3], this.mousePosY));
+            this.sliderTop = mouseY-this.mouseYOffset;
+            this.sliderTop = this.ClipSliderPos();
             this.SetScrollBarRect();
-            offsetVal = this.folderUndisplayedPixels * (this.mousePosY / (gJSUISize[1]-this.border[3]));
-            print("folder undisplayed pixels: "+this.folderUndisplayedPixels)
+            offsetVal = this.folderUndisplayedPixels * ((this.sliderTop-this.border[3]) / (gJSUISize[1]-this.border[3]-this.scrollBarHeight));
         }
-        print("offset val: "+offsetVal);
         return offsetVal;
     }
 
@@ -115,8 +113,13 @@ function Container(mg)
 
     this.SetScrollBarRect = function()
     {   
-        this.mousePosY = Math.min(gJSUISize[1]-this.scrollBarHeight, Math.max(this.border[3], this.mousePosY));
-        this.scrollBarSlider.rect = [gJSUISize[0]-this.scrollBarWidth, this.mousePosY, this.scrollBarWidth, this.scrollBarHeight];
+        this.sliderTop = this.ClipSliderPos();
+        this.scrollBarSlider.rect = [gJSUISize[0]-this.scrollBarWidth, this.sliderTop, this.scrollBarWidth, this.scrollBarHeight];
+    }
+
+    this.ClipSliderPos = function()
+    {
+        return Math.min(gJSUISize[1]-this.scrollBarHeight, Math.max(this.border[3], this.sliderTop));
     }
 
     this.GetTopBorderHeight = function()

@@ -28,7 +28,6 @@ function load_folder(path)
 {
     gFolderManager.LoadFolder(path);
     gFolderManager.SortFolder();
-    gFolderManager.CalcColumnRows();
     gFolderManager.CalcFolderSize();
     gFolderManager.DisplayFolder();
     gContainer.CheckIfDisplayScrollBar(gFolderManager.GetFolderSize())

@@ -118,11 +118,13 @@ function FolderManager()
         this.columnsRows[0] = Math.max(0, this.columnsRows[0]);
 
         this.columnsRows[1] = Math.ceil(this.filesArray.length / this.columnsRows[0]);
-        print(this.columnsRows);
+        print("columnd and rows: "+this.columnsRows);
     }
 
     this.CalcFolderSize = function()
-    {
+    {   
+        this.CalcColumnRows();
+
         this.folderSize = [this.columnsRows[0]*(this.imageSize[0]+this.elementsOffset[0])+this.offsetFromEdge[0],
                           this.columnsRows[1]*(this.imageSize[1]+this.elementsOffset[1])+gContainer.GetTopBorderHeight()+this.offsetFromEdge[1]];
     }
