@@ -3,6 +3,7 @@ include("AssetManager_ObjectCreator.js");
 include("AssetManager_Common.js");
 include("AssetManager_Container.js");
 include("AssetManager_WorldGrabber.js");
+include("AssetManager_Chooser.js");
 
 
 mgraphics.init();
@@ -17,12 +18,13 @@ var gContainer = new Container(mgraphics);
 
 var gWorldGrabber = new WorldGrabber();
 gWorldGrabber.doSetDrawto("myWorld");
+var gChooser = new Chooser(this.patcher);
 
 // PUBLIC FUNCTIONS
-function remove_objects_created()
-{
-    gObjCreator.Destroy();
-}
+// function remove_objects_created()
+// {
+//     gObjCreator.Destroy();
+// }
 
 function load_folder(path)
 {
@@ -34,21 +36,36 @@ function load_folder(path)
     mgraphics.redraw();
 }
 
+function test_chooser()
+{
+    gChooser.Test();
+}
+
+function clear()
+{
+    notifydeleted();
+    mgraphics.redraw();
+}
+
 // PRIVATE FUNCTIONS
 
 function paint()
 {   
     gContainer.DrawBackground();
     gContainer.DrawScrollBar();
+    // gContainer.DrawTopBorder();
 
+    gFolderManager.DrawOffScreenBuffer(mgraphics);
+    // if (gFolderManager.selectedFile.filePath)
+    // {   
+    //     gFolderManager.DrawSelectedHighlight(mgraphics);
+    // }
+    gFolderManager.DrawFileNames(mgraphics);
     gContainer.DrawTopBorder();
-
     if (gFolderManager.selectedFile.filePath)
     {   
-        gFolderManager.DrawSelectedHighlight(mgraphics);
         gContainer.DrawSelectedFileName(gFolderManager.selectedFile.filePath);
     }
-    gFolderManager.DrawOffScreenBuffer(mgraphics);
 }
 
 function onresize(width, height)
@@ -67,7 +84,7 @@ function ondrag(x,y,button)
     {
         if (gFolderManager.selectedFile != null)
         {
-            gObjCreator.CreateObject([x,y], gFolderManager.selectedFile.filePath, gFolderManager.selectedFile.type);
+            // gObjCreator.CreateObject([x,y], gFolderManager.selectedFile.filePath, gFolderManager.selectedFile.type);
         }
         gContainer.SetScrollBarSliderUnclicked();
     }
@@ -92,5 +109,4 @@ function onclick(x,y)
 function notifydeleted()
 {
     gFolderManager.Destroy();
-    mgraphics.redraw();
 }

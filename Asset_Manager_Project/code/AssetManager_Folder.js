@@ -2,6 +2,7 @@ function FolderManager()
 {   
     this.folder = null;
     this.filePaths = [];
+    this.folderPath = null;
     this.imageFiles = [];
     this.audioFiles = [];
     this.filesArray = [];
@@ -28,6 +29,7 @@ function FolderManager()
     this.LoadFolder = function(path)
     {   
         print("called LoadFolder")
+        this.folderPath = path;
         this.filePaths = [];
         this.folder = new Folder(path);
         this.folder.typelist = [];
@@ -41,6 +43,8 @@ function FolderManager()
             }
             this.folder.next();
         }
+
+        gChooser.LoadFolder(path);
     }
 
     this.SortFolder = function()
@@ -105,7 +109,7 @@ function FolderManager()
             this.mg.identity_matrix();
             this.mg.translate(xPos, yPos-this.scrollBarOffset);
             this.DrawBGImage(file);
-            this.DrawFileName(file);
+            // this.DrawFileName(file);
             this.mg.image_surface_draw(file);
             file.imgRect = [xPos, yPos-this.scrollBarOffset, this.imageSize[0], this.imageSize[1]];
         }
@@ -129,22 +133,27 @@ function FolderManager()
                           this.columnsRows[1]*(this.imageSize[1]+this.elementsOffset[1])+gContainer.GetTopBorderHeight()+this.offsetFromEdge[1]];
     }
 
-    this.DrawFileName = function(file)
-    {   
-        this.mg.set_font_size(11);
-        this.mg.select_font_face("Arial");
-        this.mg.set_source_rgba([1,1,1,1]);
-        var string = file.filePath.replace(/^.*[\\\/]/, '');
-        this.nameTextSize = this.mg.text_measure(string);
-        if (this.nameTextSize[0] > this.imageSize[0])
+    this.DrawFileNames = function(mainMG)
+    {      
+        mainMG.identity_matrix();
+        for (var i=0; i<this.filesArray.length; i++)
         {
-            var numOfChars = Math.floor(this.imageSize[0]/5.6);
-            string = string.slice(0, numOfChars-3);
-            string+="...";
+            var file = this.filesArray[i];
+            mainMG.set_font_size(13);
+            mainMG.select_font_face("Arial");
+            mainMG.set_source_rgba([1,1,1,1]);
+            var string = this.GetFileNameFromPath(file.filePath);
+            this.nameTextSize = this.mg.text_measure(string);
+            if (this.nameTextSize[0] > this.imageSize[0])
+            {
+                var numOfChars = Math.floor(this.imageSize[0]/5.6);
+                string = string.slice(0, numOfChars-3);
+                string+="...";
+            }
+            mainMG.move_to(file.imgRect[0], file.imgRect[1]+this.imageSize[1]+this.nameTextSize[1]);
+            mainMG.text_path(string);
+            mainMG.fill();
         }
-        this.mg.move_to(0, this.imageSize[1]+this.nameTextSize[1]);
-        this.mg.text_path(string);
-        this.mg.fill();
     }
 
     this.DrawBGImage = function(obj)
@@ -158,17 +167,19 @@ function FolderManager()
     this.DrawOffScreenBuffer = function(mg)
     {   
         if (this.offScreenBuffer != null)
-        {
+        {   
+            // mg.identity_matrix();
+            // mg.translate(0, gContainer.GetTopBorderHeight());
             mg.image_surface_draw(this.offScreenBuffer);
         }
     }
 
     this.DrawSelectedHighlight = function(mainMG)
-    {
+    {   
+        mainMG.identity_matrix();
         mainMG.set_source_rgba(0.14, 0.362069, 0.6, 1.);
-        mainMG.rectangle_rounded(this.selectedFile.rect[0], this.selectedFile.rect[1]+this.imageSize[1], this.imageSize[0], 15, 10, 10);
+        mainMG.rectangle_rounded(this.selectedFile.rect[0], this.selectedFile.rect[1]+this.imageSize[1]+2.5, this.imageSize[0], 15, 10, 10);
         mainMG.fill();
-        // this.offScreenBuffer = new Image(this.mg);
     }
 
     this.SetScrollBarOffset = function(offset)
@@ -176,25 +187,34 @@ function FolderManager()
         this.scrollBarOffset = offset;
     }
 
+    this.GetFileNameFromPath = function(path)
+    {
+        return path.replace(/^.*[\\\/]/, '');
+    }
+
     this.CheckIfClicked = function(mousePos)
     {   
         var isClicked = false;
         for (var i=0; i<this.filesArray.length; i++)
         {
-            var imgRect = this.filesArray[i].imgRect;
-            if (gCommon.CheckIfInside(mousePos, imgRect))
+            var imgRect = this.filesArray[i].imgRect.slice();
+            var testRect =imgRect.slice();
+            testRect[3] += this.nameTextSize[1];
+            if (gCommon.CheckIfInside(mousePos, testRect))
             {
-                // print(this.filesArray[i].filePath)
                 this.selectedFile.filePath = this.filesArray[i].filePath;
                 this.selectedFile.type = this.filesArray[i].type;
                 this.selectedFile.rect = imgRect;
                 isClicked = true;
+                gChooser.SetChooserPosition(imgRect, this.imageSize);
+                gChooser.SetChooserFile(this.GetFileNameFromPath(this.filesArray[i].filePath));
                 break;
             }
         }
         if (!isClicked)
         {
             this.ResetClicked();
+            gChooser.DeselectItem();
         }
     }
 
@@ -203,6 +223,11 @@ function FolderManager()
         this.selectedFile.filePath = null;
         this.selectedFile.type = null;
         this.selectedFile.rect = null;
+    }
+
+    this.GetFolderPath = function()
+    {
+        return this.folderPath;
     }
 
     this.GetFolderSize = function()

@@ -10,7 +10,7 @@
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 464.0, 179.0, 1225.0, 745.0 ],
+		"rect" : [ 375.0, 94.0, 1407.0, 929.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 12.0,
@@ -40,6 +40,56 @@
 		"assistshowspatchername" : 0,
 		"boxes" : [ 			{
 				"box" : 				{
+					"id" : "obj-112",
+					"maxclass" : "newobj",
+					"numinlets" : 3,
+					"numoutlets" : 2,
+					"outlettype" : [ "signal", "signal" ],
+					"patching_rect" : [ 1305.0, 607.0, 52.0, 22.0 ],
+					"text" : "groove~"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"autopopulate" : 1,
+					"bgcolor" : [ 0.0, 0.0, 0.0, 0.0 ],
+					"fontface" : 0,
+					"fontname" : "Arial",
+					"fontsize" : 12.0,
+					"frozen_box_attributes" : [ "varname" ],
+					"id" : "obj-92",
+					"items" : [ "1.png", ",", "1_2.png", ",", "1_3.png", ",", "1_4.png", ",", "1_5.png", ",", "1_6.png", ",", "1_7.png", ",", "1_8.png", ",", "2.png", ",", "2_2.png", ",", "3.png", ",", "3_2.png", ",", "3_3.png", ",", "3_4.png", ",", "4.png", ",", "4_2.png", ",", "5.png", ",", "5_2.png", ",", "cat_face.png", ",", "Commander", "Impulse", "-", "DivKid.mp3", ",", "NewSong_PILLS.wav", ",", "nforest2.png", ",", "universe3.png" ],
+					"maxclass" : "chooser",
+					"multiselect" : 0,
+					"numinlets" : 1,
+					"numoutlets" : 6,
+					"outlettype" : [ "", "", "", "", "", "" ],
+					"parameter_enable" : 0,
+					"patching_rect" : [ 244.0, 511.5, 85.0, 20.0 ],
+					"prefix" : "D:/MyData/My Files/Assets/TestFolder/",
+					"selectioncolor" : [ 0.2, 0.7, 1.0, 0.3 ],
+					"stripecolor" : [ 0.0, 0.0, 0.0, 0.0 ],
+					"textcolor" : [ 0.0, 0.0, 0.0, 0.0 ],
+					"useselectioncolor" : 1,
+					"varname" : "assetchooser"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-5",
+					"maxclass" : "message",
+					"numinlets" : 2,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 592.0, 216.0, 77.0, 22.0 ],
+					"text" : "test_chooser"
+				}
+
+			}
+, 			{
+				"box" : 				{
 					"id" : "obj-8",
 					"maxclass" : "toggle",
 					"numinlets" : 1,
@@ -58,7 +108,7 @@
 					"numoutlets" : 3,
 					"outlettype" : [ "jit_matrix", "bang", "" ],
 					"patching_rect" : [ 783.0, 239.375, 357.0, 22.0 ],
-					"text" : "jit.world myWorld @size 320 240 @fsaa 1 @floating 1 @enable 1"
+					"text" : "jit.world myWorld @size 160 120 @fsaa 1 @floating 1 @enable 1"
 				}
 
 			}
@@ -155,7 +205,7 @@
 					"numoutlets" : 2,
 					"outlettype" : [ "jit_matrix", "" ],
 					"patching_rect" : [ 904.0, 418.0, 149.0, 22.0 ],
-					"text" : "jit.matrix 4 float32 256 256"
+					"text" : "jit.matrix 4 float32 100 100"
 				}
 
 			}
@@ -333,20 +383,6 @@
 			}
 , 			{
 				"box" : 				{
-					"autofit" : 1,
-					"forceaspect" : 1,
-					"id" : "obj-277",
-					"maxclass" : "fpic",
-					"numinlets" : 1,
-					"numoutlets" : 1,
-					"outlettype" : [ "jit_matrix" ],
-					"patching_rect" : [ 649.0, 70.875, 100.0, 56.25 ],
-					"pic" : "D:/MyData/My Files/Assets/TestFolder/nforest2.png"
-				}
-
-			}
-, 			{
-				"box" : 				{
 					"id" : "obj-54",
 					"maxclass" : "message",
 					"numinlets" : 2,
@@ -364,7 +400,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 153.0, 137.0, 428.0, 22.0 ],
+					"patching_rect" : [ 138.0, 137.0, 428.0, 22.0 ],
 					"text" : "\"D:/MyData/My Files/Assets/TestFolder/\""
 				}
 
@@ -376,8 +412,8 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 271.0, 179.0, 77.0, 22.0 ],
-					"text" : "notifydeleted"
+					"patching_rect" : [ 271.0, 179.0, 35.0, 22.0 ],
+					"text" : "clear"
 				}
 
 			}
@@ -388,7 +424,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 2,
 					"outlettype" : [ "", "" ],
-					"patching_rect" : [ 58.0, 29.0, 372.0, 78.0 ]
+					"patching_rect" : [ 54.0, 31.0, 372.0, 78.0 ]
 				}
 
 			}
@@ -399,7 +435,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 58.0, 179.0, 115.0, 22.0 ],
+					"patching_rect" : [ 54.0, 179.0, 115.0, 22.0 ],
 					"text" : "prepend load_folder"
 				}
 
@@ -413,19 +449,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 58.0, 225.375, 495.0, 280.625 ]
-				}
-
-			}
-, 			{
-				"box" : 				{
-					"attr" : "autofit",
-					"id" : "obj-278",
-					"maxclass" : "attrui",
-					"numinlets" : 1,
-					"numoutlets" : 1,
-					"outlettype" : [ "" ],
-					"patching_rect" : [ 649.0, 40.875, 150.0, 22.0 ]
+					"patching_rect" : [ 54.0, 232.34375, 498.0, 290.3125 ]
 				}
 
 			}
@@ -551,13 +575,6 @@
 			}
 , 			{
 				"patchline" : 				{
-					"destination" : [ "obj-277", 0 ],
-					"source" : [ "obj-278", 0 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
 					"destination" : [ "obj-1", 0 ],
 					"source" : [ "obj-3", 0 ]
 				}
@@ -596,6 +613,13 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-1", 0 ],
+					"source" : [ "obj-5", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-1", 0 ],
 					"source" : [ "obj-54", 0 ]
 				}
 
@@ -618,15 +642,8 @@
 		"dependency_cache" : [ 			{
 				"name" : "AssetManager.js",
 				"bootpath" : "D:/MyData/Lavori/Cycling74/Asset_Manager",
-				"patcherrelativepath" : ".",
+				"patcherrelativepath" : "../..",
 				"type" : "TEXT",
-				"implicit" : 1
-			}
-, 			{
-				"name" : "nforest2.png",
-				"bootpath" : "D:/MyData/My Files/Assets/TestFolder",
-				"patcherrelativepath" : "../../../My Files/Assets/TestFolder",
-				"type" : "PNG",
 				"implicit" : 1
 			}
  ],

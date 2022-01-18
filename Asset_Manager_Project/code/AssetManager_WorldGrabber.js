@@ -69,7 +69,7 @@ function WorldGrabber()
     // SPECIFIC FUNCTIONS AND PROPS 
     this.GetWindowSize = function()
     {
-        print(this.dummyNode.dim);
+        // print(this.dummyNode.dim);
         return this.dummyNode.dim;
     }
 
