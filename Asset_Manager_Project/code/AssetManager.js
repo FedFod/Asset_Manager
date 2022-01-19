@@ -12,13 +12,21 @@ mgraphics.autofill = 0;
 
 var gJSUISize = [box.rect[2] - box.rect[0], box.rect[3] - box.rect[1]];
 var gFolderManager = new FolderManager();
-var gObjCreator = new ObjectCreator(this.patcher);
+// var gObjCreator = new ObjectCreator(this.patcher);
+var gObjAllocator = new ObjectAllocator(); 
 var gCommon = new Common();
 var gContainer = new Container(mgraphics);
 
+var gGlobal = new Global("AssetManager");
+
+gGlobal.worldName = "myWorld";
 var gWorldGrabber = new WorldGrabber();
-gWorldGrabber.doSetDrawto("myWorld");
+gWorldGrabber.doSetDrawto(gGlobal.worldName);
 var gChooser = new Chooser(this.patcher);
+
+
+var gMouseWindowPosition = [];
+var gIsDraggingFile = false;
 
 // PUBLIC FUNCTIONS
 // function remove_objects_created()
@@ -83,10 +91,24 @@ function ondrag(x,y,button)
     if (!button)
     {
         if (gFolderManager.selectedFile != null)
-        {
+        {   
+            print("should allocate")
+            var patcherPos = [x+box.rect[0], y+box.rect[1]];
+            gObjAllocator.AllocateObject(patcherPos, gFolderManager.selectedFile.type, gFolderManager.selectedFile.filePath);
+            // gIsDraggingFile = true;
+            // print("is dragging "+gIsDragginFile);
             // gObjCreator.CreateObject([x,y], gFolderManager.selectedFile.filePath, gFolderManager.selectedFile.type);
         }
         gContainer.SetScrollBarSliderUnclicked();
+    }
+    if (button)
+    {
+        if (gFolderManager.selectedFile != null)
+        {   
+            gIsDraggingFile = true;
+            // print("is dragging "+gIsDraggingFile);
+            // gObjCreator.CreateObject([x,y], gFolderManager.selectedFile.filePath, gFolderManager.selectedFile.type);
+        }
     }
     if (gContainer.GetScrollBarSliderClicked())
     {
@@ -109,4 +131,5 @@ function onclick(x,y)
 function notifydeleted()
 {
     gFolderManager.Destroy();
+    // gObjCreator.Destroy();
 }

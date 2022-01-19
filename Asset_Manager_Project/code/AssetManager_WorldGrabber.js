@@ -77,6 +77,11 @@ function WorldGrabber()
     {
         
     }
+
+    this.GetMouseWorldPos = function(mX, mY)
+    {
+        return [mX / this.dummyNode.dim[0], mY / this.dummyNode.dim[1]];
+    }
 }
 
 function swapcallback(event){
@@ -87,15 +92,21 @@ function swapcallback(event){
 			break;
 
 		case "mouse": 
-            print(event.args);
+            // print("mouse "+event.args);
+            gMouseWindowPosition = gWorldGrabber.GetMouseWorldPos(event.args[0], event.args[1]);
+            // if (gIsDraggingFile)
+            // {   
+            //     print("dragging in mouse "+gIsDraggingFile)
+            //     gObjCreator.CreateObject(gFolderManager.selectedFile.filePath, gFolderManager.selectedFile.type);
+            // }
 			break;
 		
 		case "mouseidle":  // Check if mouse is close to vertices to highlight them
-            // print(event.args);
+            // print("mouseidle "+event.args);
 			break;
 
 		case "mouseidleout":
-            print(event.args);
+            // print(event.args);
             break;
 		
 		case "keydown": 

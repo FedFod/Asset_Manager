@@ -51,7 +51,7 @@ function FolderManager()
     {   
         print("called SortFolder")
 
-        this.DestroyFiles();
+        this.DestroyImages();
 
         for (var file in this.filePaths)
         {   
@@ -235,7 +235,7 @@ function FolderManager()
         return this.folderSize;
     }
 
-    this.DestroyFiles = function()
+    this.DestroyImages = function()
     {   
         print("Called DestroyFiles");
 
@@ -268,7 +268,7 @@ function FolderManager()
 
     this.Destroy = function()
     {
-        this.DestroyFiles();
+        this.DestroyImages();
         this.FreeOffScreenBuffer();
         this.ResetClicked();
         print("Everything freed");
