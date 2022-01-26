@@ -1,29 +1,44 @@
 autowatch = 1;
 
+var gGlobal = new Global("AssetManager");
+
+include("jit_gl_spritegrid_WorldGrabber.js");
+include("jit_gl_spritegrid_Sprite.js");
+include("jit_gl_spritegrid_WindowGrid.js");
+include("jit_gl_spritegrid_MaxSpritesGrid.js");
+
 var gP = this.patcher;
 var gPP = this.patcher.parentpatcher;
 var gCurrentYPos = 20;
-var gSpriteObjects = [];
 
-gGlobal = new Global("AssetManager");
+var gWorldGrabber = new WorldGrabber();
+gWorldGrabber.doSetDrawto(gGlobal.worldName);
+
+var gWindowGrid = new WindowGrid();
+
 gGlobal.spriteGridExists = 1;
 gGlobal.spritePaths = [];
-
 gGlobal.spriteGridBPObj = gPP.getnamed("jit_gl_spritegrid");
 
 var tsk = new Task(CheckIfNewSprite, this);
 tsk.interval = 200;
 tsk.repeat();
 
+gWindowGrid.FillCellsArray();
+
+var gMaxSpritesGrid = new MaxSpritesGrid();
+var gPathImgSelected = null;
+
 // PUBLIC FUNCTIONS ---------------
 function clear()
 {
-    for (var obj in gSpriteObjects)
-    {
-        gP.remove(gSpriteObjects[obj]);
-    }
-    gSpriteObjects = [];
+    gMaxSpritesGrid.Destroy();
     gCurrentYPos = 20;
+}
+
+function PathImgSelected(path)
+{
+    gPathImgSelected = path;
 }
 
 // PRIVATE FUNCTIONS --------------
@@ -31,13 +46,10 @@ function CheckIfNewSprite()
 {   
     // print(gGlobal.spritePaths.length);
     if (gGlobal.isNewSprite)
-    {
-        gSpriteObjects.push(gP.newdefault(0, gCurrentYPos, "bpatcher", "jit.gl.sprite.maxpat", "@args", ["drawto "+gGlobal.worldName, "",
-                                         "file_path "+gGlobal.spritePaths[gGlobal.spritePaths.length-1]]));
-        gSpriteObjects[gSpriteObjects.length-1].varname = "Sprite_";
-
-        var rectangle = [0, gCurrentYPos, 88, 50];
-        gP.script("sendbox", gSpriteObjects[gSpriteObjects.length-1].varname, "patching_rect", rectangle.slice());
+    {   
+        var imgPath = gGlobal.spritePaths[gGlobal.spritePaths.length-1];
+        gMaxSpritesGrid.AddSprite(gP, gCurrentYPos, imgPath);
+        
         gCurrentYPos+=55;
         gGlobal.isNewSprite = 0;
     }
@@ -53,7 +65,10 @@ gGlobal.GetGridBPatcherRect = function()
 } 
 
 function notifydeleted()
-{
+{   
+    print("Cleaning spritegrid")
     gGlobal.spriteGridExists = 0;
+    gWindowGrid.Destroy();
+    gWorldGrabber.Destroy();
 }
 

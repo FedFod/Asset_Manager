@@ -5,16 +5,14 @@ function WorldGrabber()
     this.proxyDrawto = "";
     this.swaplisten = null;
     this.explicitDrawto = false;
-
-    this.dummyNode = new JitterObject("jit.gl.node");
-
     this.proxy = null;
+    this.dummyNode = new JitterObject("jit.gl.node");
+    this.implicitTracker = new JitterObject("jit_gl_implicit");
+
     if (max.version >= 820)
     {
         this.proxy = new JitterObject("jit.proxy");
     }
-
-    this.implicitTracker = new JitterObject("jit_gl_implicit");
 
     var implicitCallback = (function() {
         if (!this.explicitDrawto && this.implicitDrawto != this.implicitTracker.drawto[0])
@@ -63,10 +61,25 @@ function WorldGrabber()
             this.swaplisten.subjectname = "";
         }
         this.swaplisten = new JitterListener(this.drawto, swapcallback);
-        print(this.swaplisten.subjectname)
+        print("swaplisten subject name "+this.swaplisten.subjectname)
+    }
+
+    this.Destroy = function()
+    {   
+        print("Cleaning WorldGrabber");
+        if (this.proxy != null)
+        {
+            this.proxy.freepeer();
+        }
+        this.dummyNode.freepeer();
+        this.implicitTracker.freepeer();
+        this.sketch.freepeer();
     }
 
     // SPECIFIC FUNCTIONS AND PROPS 
+
+    this.sketch = new JitterObject("jit.gl.sketch", gGlobal.worldName);
+
     this.GetWindowSize = function()
     {
         // print(this.dummyNode.dim);
@@ -79,8 +92,8 @@ function WorldGrabber()
     }
 
     this.GetMouseWorldPos = function(mX, mY)
-    {
-        return [mX / this.dummyNode.dim[0], mY / this.dummyNode.dim[1]];
+    {   
+        return (this.sketch.screentoworld([mX,mY,0]));
     }
 }
 
@@ -94,11 +107,7 @@ function swapcallback(event){
 		case "mouse": 
             // print("mouse "+event.args);
             gMouseWindowPosition = gWorldGrabber.GetMouseWorldPos(event.args[0], event.args[1]);
-            // if (gIsDraggingFile)
-            // {   
-            //     print("dragging in mouse "+gIsDraggingFile)
-            //     gObjCreator.CreateObject(gFolderManager.selectedFile.filePath, gFolderManager.selectedFile.type);
-            // }
+            gWindowGrid.CheckIfCellClicked(gMouseWindowPosition, event.args[2]);
 			break;
 		
 		case "mouseidle":  // Check if mouse is close to vertices to highlight them

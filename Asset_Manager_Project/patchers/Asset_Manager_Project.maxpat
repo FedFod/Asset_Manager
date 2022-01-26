@@ -10,7 +10,7 @@
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 34.0, 77.0, 1385.0, 929.0 ],
+		"rect" : [ 34.0, 77.0, 1501.0, 929.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 12.0,
@@ -39,6 +39,55 @@
 		"subpatcher_template" : "Template_Grid",
 		"assistshowspatchername" : 0,
 		"boxes" : [ 			{
+				"box" : 				{
+					"id" : "obj-7",
+					"maxclass" : "newobj",
+					"numinlets" : 1,
+					"numoutlets" : 2,
+					"outlettype" : [ "", "" ],
+					"patching_rect" : [ 565.0, 59.0, 68.0, 22.0 ],
+					"text" : "jit.gl.sketch"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-41",
+					"maxclass" : "message",
+					"numinlets" : 2,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 289.0, 766.0, 75.0, 22.0 ],
+					"text" : "getattributes"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-33",
+					"linecount" : 3,
+					"maxclass" : "message",
+					"numinlets" : 2,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 259.0, 836.0, 50.0, 50.0 ],
+					"text" : "mouse u298001584 0"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-21",
+					"maxclass" : "newobj",
+					"numinlets" : 1,
+					"numoutlets" : 2,
+					"outlettype" : [ "", "" ],
+					"patching_rect" : [ 283.0, 800.0, 65.0, 22.0 ],
+					"text" : "jit.gl.picker"
+				}
+
+			}
+, 			{
 				"box" : 				{
 					"bgmode" : 0,
 					"border" : 0,
@@ -110,7 +159,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 591.0, 230.0, 35.0, 22.0 ],
+					"patching_rect" : [ 565.0, 281.0, 35.0, 22.0 ],
 					"text" : "clear"
 				}
 
@@ -131,7 +180,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"offset" : [ 0.0, 0.0 ],
-					"patching_rect" : [ 591.0, 268.0, 291.0, 293.0 ],
+					"patching_rect" : [ 565.0, 317.0, 225.0, 299.0 ],
 					"varname" : "jit_gl_spritegrid",
 					"viewvisibility" : 1
 				}
@@ -173,7 +222,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 1217.0, 91.0, 50.0, 36.0 ],
-					"text" : "244 102"
+					"text" : "906 364"
 				}
 
 			}
@@ -205,7 +254,7 @@
 					"numoutlets" : 6,
 					"outlettype" : [ "", "", "", "", "", "" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 244.0, 630.0, 85.0, 20.0 ],
+					"patching_rect" : [ 334.0, 555.0, 85.0, 20.0 ],
 					"prefix" : "D:/MyData/My Files/Assets/TestFolder/",
 					"selectioncolor" : [ 0.2, 0.7, 1.0, 0.3 ],
 					"stripecolor" : [ 0.0, 0.0, 0.0, 0.0 ],
@@ -391,7 +440,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 2,
 					"outlettype" : [ "jit_matrix", "" ],
-					"patching_rect" : [ 976.0, 374.0, 191.0, 162.0 ],
+					"patching_rect" : [ 976.0, 382.5, 191.0, 162.0 ],
 					"sync" : 1
 				}
 
@@ -672,6 +721,13 @@
 			}
 , 			{
 				"patchline" : 				{
+					"destination" : [ "obj-33", 1 ],
+					"source" : [ "obj-21", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
 					"destination" : [ "obj-23", 0 ],
 					"order" : 1,
 					"source" : [ "obj-22", 0 ]
@@ -748,6 +804,13 @@
 					"destination" : [ "obj-3", 0 ],
 					"order" : 1,
 					"source" : [ "obj-4", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-21", 0 ],
+					"source" : [ "obj-41", 0 ]
 				}
 
 			}

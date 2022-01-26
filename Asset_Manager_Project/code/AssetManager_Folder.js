@@ -122,7 +122,7 @@ function FolderManager()
         this.columnsRows[0] = Math.max(0, this.columnsRows[0]);
 
         this.columnsRows[1] = Math.ceil(this.filesArray.length / this.columnsRows[0]);
-        print("columnd and rows: "+this.columnsRows);
+        print("Asset manager columns and rows: "+this.columnsRows);
     }
 
     this.CalcFolderSize = function()

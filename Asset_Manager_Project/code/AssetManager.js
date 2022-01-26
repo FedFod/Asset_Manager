@@ -2,7 +2,6 @@ include("AssetManager_Folder.js");
 include("AssetManager_ObjectCreator.js");
 include("AssetManager_Common.js");
 include("AssetManager_Container.js");
-include("AssetManager_WorldGrabber.js");
 include("AssetManager_Chooser.js");
 
 
@@ -20,8 +19,6 @@ var gContainer = new Container(mgraphics);
 var gGlobal = new Global("AssetManager");
 
 gGlobal.worldName = "myWorld";
-var gWorldGrabber = new WorldGrabber();
-gWorldGrabber.doSetDrawto(gGlobal.worldName);
 var gChooser = new Chooser(this.patcher);
 
 
@@ -116,7 +113,7 @@ function ondrag(x,y,button)
         gFolderManager.DisplayFolder();
     }
 
-    gWorldGrabber.GetWindowSize();
+    // gWorldGrabber.GetWindowSize();
 
     mgraphics.redraw();
 }
