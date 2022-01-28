@@ -11,7 +11,6 @@ mgraphics.autofill = 0;
 
 var gJSUISize = [box.rect[2] - box.rect[0], box.rect[3] - box.rect[1]];
 var gFolderManager = new FolderManager();
-// var gObjCreator = new ObjectCreator(this.patcher);
 var gObjAllocator = new ObjectAllocator(); 
 var gCommon = new Common();
 var gContainer = new Container(mgraphics);

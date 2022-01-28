@@ -107,7 +107,7 @@ function swapcallback(event){
 		case "mouse": 
             // print("mouse "+event.args);
             gMouseWindowPosition = gWorldGrabber.GetMouseWorldPos(event.args[0], event.args[1]);
-            gWindowGrid.CheckIfCellClicked(gMouseWindowPosition, event.args[2]);
+            gWindowGrid.PlaceSprite(gMouseWindowPosition, event.args[2]);
 			break;
 		
 		case "mouseidle":  // Check if mouse is close to vertices to highlight them

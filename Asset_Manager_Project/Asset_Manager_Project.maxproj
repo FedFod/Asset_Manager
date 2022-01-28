@@ -2,7 +2,7 @@
 	"name" : "Asset_Manager_Project",
 	"version" : 1,
 	"creationdate" : 3725363105,
-	"modificationdate" : 3725978699,
+	"modificationdate" : 3726157980,
 	"viewrect" : [ 27.0, 411.0, 300.0, 500.0 ],
 	"autoorganize" : 1,
 	"hideprojectwindow" : 0,
@@ -47,6 +47,11 @@
 				"local" : 1
 			}
 ,
+			"jit_gl_spritegrid.js" : 			{
+				"kind" : "javascript",
+				"local" : 1
+			}
+,
 			"AssetManager_Chooser.js" : 			{
 				"kind" : "javascript",
 				"local" : 1
@@ -72,22 +77,17 @@
 				"local" : 1
 			}
 ,
-			"jit_gl_spritegrid.js" : 			{
-				"kind" : "javascript",
-				"local" : 1
-			}
-,
 			"jit_gl_spritegrid_WorldGrabber.js" : 			{
 				"kind" : "javascript",
 				"local" : 1
 			}
 ,
-			"jit_gl_spritegrid_Sprite.js" : 			{
+			"jit_gl_spritegrid_WindowGrid.js" : 			{
 				"kind" : "javascript",
 				"local" : 1
 			}
 ,
-			"jit_gl_spritegrid_WindowGrid.js" : 			{
+			"jit_gl_spritegrid_MaxSprite.js" : 			{
 				"kind" : "javascript",
 				"local" : 1
 			}

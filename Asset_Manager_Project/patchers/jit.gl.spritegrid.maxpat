@@ -10,7 +10,7 @@
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 575.0, 305.0, 644.0, 608.0 ],
+		"rect" : [ 539.0, 291.0, 644.0, 608.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 12.0,
@@ -40,23 +40,13 @@
 		"assistshowspatchername" : 0,
 		"boxes" : [ 			{
 				"box" : 				{
-					"id" : "obj-14",
-					"maxclass" : "message",
-					"numinlets" : 2,
-					"numoutlets" : 1,
-					"outlettype" : [ "" ],
-					"patching_rect" : [ 527.0, 154.0, 50.0, 22.0 ]
-				}
-
-			}
-, 			{
-				"box" : 				{
+					"hidden" : 1,
 					"id" : "obj-4",
 					"maxclass" : "newobj",
 					"numinlets" : 0,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 499.0, 195.0, 143.0, 22.0 ],
+					"patching_rect" : [ 586.0, 351.0, 143.0, 22.0 ],
 					"text" : "r spritegrid_img_selected"
 				}
 
@@ -64,13 +54,14 @@
 , 			{
 				"box" : 				{
 					"comment" : "",
+					"hidden" : 1,
 					"id" : "obj-3",
-					"index" : 1,
+					"index" : 0,
 					"maxclass" : "inlet",
 					"numinlets" : 0,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 462.0, 191.0, 30.0, 30.0 ]
+					"patching_rect" : [ 549.0, 347.0, 30.0, 30.0 ]
 				}
 
 			}
@@ -87,12 +78,13 @@
 			}
 , 			{
 				"box" : 				{
+					"hidden" : 1,
 					"id" : "obj-1",
 					"maxclass" : "newobj",
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 462.0, 229.0, 113.0, 22.0 ],
+					"patching_rect" : [ 549.0, 385.0, 113.0, 22.0 ],
 					"saved_object_attributes" : 					{
 						"filename" : "jit_gl_spritegrid.js",
 						"parameter_enable" : 0
@@ -106,6 +98,7 @@
 		"lines" : [ 			{
 				"patchline" : 				{
 					"destination" : [ "obj-1", 0 ],
+					"hidden" : 1,
 					"source" : [ "obj-3", 0 ]
 				}
 
@@ -113,20 +106,21 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-1", 0 ],
-					"order" : 1,
+					"hidden" : 1,
 					"source" : [ "obj-4", 0 ]
 				}
 
 			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-14", 1 ],
-					"order" : 0,
-					"source" : [ "obj-4", 0 ]
-				}
-
+ ],
+		"dependency_cache" : [ 			{
+				"name" : "jit_gl_spritegrid.js",
+				"bootpath" : "D:/MyData/Lavori/Cycling74/Asset_Manager/Asset_Manager_Project/code",
+				"patcherrelativepath" : "../code",
+				"type" : "TEXT",
+				"implicit" : 1
 			}
- ]
+ ],
+		"autosave" : 0
 	}
 
 }
