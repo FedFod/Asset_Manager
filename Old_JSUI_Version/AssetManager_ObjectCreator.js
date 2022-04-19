@@ -34,9 +34,9 @@ function ObjectAllocator(patcher)
     {   
         if (gGlobal.spriteGridExists)
         {   
-            print("SpriteGrid exists")
+            FF_Utils.Print("SpriteGrid exists")
             this.GridPatcherRect = gGlobal.GetGridBPatcherRect();
-            print("pos "+pos, "rect "+this.GridPatcherRect)
+            FF_Utils.Print("pos "+pos, "rect "+this.GridPatcherRect)
             if (gCommon.CheckIfInside(pos, this.GridPatcherRect))
             {   
                 switch (type) 

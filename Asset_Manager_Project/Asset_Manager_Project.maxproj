@@ -2,8 +2,8 @@
 	"name" : "Asset_Manager_Project",
 	"version" : 1,
 	"creationdate" : 3725363105,
-	"modificationdate" : 3726157980,
-	"viewrect" : [ 27.0, 411.0, 300.0, 500.0 ],
+	"modificationdate" : 3733226129,
+	"viewrect" : [ 349.0, 339.0, 300.0, 500.0 ],
 	"autoorganize" : 1,
 	"hideprojectwindow" : 0,
 	"showdependencies" : 1,
@@ -16,12 +16,12 @@
 				"toplevel" : 1
 			}
 ,
-			"jit.gl.sprite.maxpat" : 			{
+			"jit.gl.spritegrid.maxpat" : 			{
 				"kind" : "patcher",
 				"local" : 1
 			}
 ,
-			"jit.gl.spritegrid.maxpat" : 			{
+			"jit.gl.sprite.maxpat" : 			{
 				"kind" : "patcher",
 				"local" : 1
 			}
@@ -29,12 +29,12 @@
 		}
 ,
 		"media" : 		{
-			"imageBG.png" : 			{
+			"SpeakerIcon.png" : 			{
 				"kind" : "imagefile",
 				"local" : 1
 			}
 ,
-			"SpeakerIcon.png" : 			{
+			"imageBG_2.png" : 			{
 				"kind" : "imagefile",
 				"local" : 1
 			}
@@ -42,12 +42,17 @@
 		}
 ,
 		"code" : 		{
-			"AssetManager.js" : 			{
+			"jit_gl_spritegrid.js" : 			{
 				"kind" : "javascript",
 				"local" : 1
 			}
 ,
-			"jit_gl_spritegrid.js" : 			{
+			"jit_gl_spritegrid_MaxSprite_VideoPlayer.js" : 			{
+				"kind" : "javascript",
+				"local" : 1
+			}
+,
+			"jit_gl_spritegrid_MaxSpritesGrid.js" : 			{
 				"kind" : "javascript",
 				"local" : 1
 			}
@@ -58,21 +63,6 @@
 			}
 ,
 			"AssetManager_Common.js" : 			{
-				"kind" : "javascript",
-				"local" : 1
-			}
-,
-			"AssetManager_Container.js" : 			{
-				"kind" : "javascript",
-				"local" : 1
-			}
-,
-			"AssetManager_Folder.js" : 			{
-				"kind" : "javascript",
-				"local" : 1
-			}
-,
-			"AssetManager_ObjectCreator.js" : 			{
 				"kind" : "javascript",
 				"local" : 1
 			}
@@ -88,6 +78,11 @@
 			}
 ,
 			"jit_gl_spritegrid_MaxSprite.js" : 			{
+				"kind" : "javascript",
+				"local" : 1
+			}
+,
+			"jit_gl_spritegrid_Collisions.js" : 			{
 				"kind" : "javascript",
 				"local" : 1
 			}

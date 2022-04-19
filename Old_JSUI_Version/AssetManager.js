@@ -88,11 +88,11 @@ function ondrag(x,y,button)
     {
         if (gFolderManager.selectedFile != null)
         {   
-            print("should allocate")
+            FF_Utils.Print("should allocate")
             var patcherPos = [x+box.rect[0], y+box.rect[1]];
             gObjAllocator.AllocateObject(patcherPos, gFolderManager.selectedFile.type, gFolderManager.selectedFile.filePath);
             // gIsDraggingFile = true;
-            // print("is dragging "+gIsDragginFile);
+            // FF_Utils.Print("is dragging "+gIsDragginFile);
             // gObjCreator.CreateObject([x,y], gFolderManager.selectedFile.filePath, gFolderManager.selectedFile.type);
         }
         gContainer.SetScrollBarSliderUnclicked();
@@ -102,7 +102,7 @@ function ondrag(x,y,button)
         if (gFolderManager.selectedFile != null)
         {   
             gIsDraggingFile = true;
-            // print("is dragging "+gIsDraggingFile);
+            // FF_Utils.Print("is dragging "+gIsDraggingFile);
             // gObjCreator.CreateObject([x,y], gFolderManager.selectedFile.filePath, gFolderManager.selectedFile.type);
         }
     }

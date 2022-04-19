@@ -12,7 +12,31 @@ function WindowGrid()
         this.gridArray[i] = new Array(this.gridDim);
     }
 
-    this.gridVisualizer = new JitterObject("jit.gl.gridshape", gGlobal.worldName);
+    // this.node = new JitterObject("jit.gl.node", gWorldGrabber.GetWorldName());
+    // // this.node.fsaa = 1;
+    // this.node.capture = 1;
+    // this.node.erase_color = [0,0,0,0];
+    // FF_Utils.Print("node name "+this.node.name)
+
+    this.node = {};
+    this.node.name = gWorldGrabber.GetWorldName();
+
+    // this.camera = new JitterObject("jit.gl.camera");
+    // this.camera.drawto = this.node.name;
+    // this.camera.ortho = 1;
+    // this.camera.lens_angle = 60;
+
+    // this.vp = new JitterObject("jit.gl.videoplane", gWorldGrabber.GetWorldName());
+    // this.vp.transform_reset = 2;
+    // this.vp.texture = this.node.out_name;
+    // this.vp.blend_enable = 1;
+    // this.vp.depth_enable = 0;
+    // this.vp.layer = 0;
+    // this.vp.interp = 0;
+
+    this.sketch = new JitterObject("jit.gl.sketch", this.node.name);
+
+    this.gridVisualizer = new JitterObject("jit.gl.gridshape", this.node.name);
     this.gridVisualizer.poly_mode = [1,1];
     this.gridVisualizer.gridmode = 0;
     this.gridVisualizer.color = [1,0,0,1];
@@ -28,46 +52,47 @@ function WindowGrid()
         this.enableGrid = val;
     }
 
-    this.PlaceSprite = function(mouse, button)
+    this.PlaceGLSprite = function(windowMouse, button)
     {   
-        print("button ", button)
-        if (button)
-        {
-            print("Sprite selected "+gPathImgSelected)
+        // FF_Utils.Print("button ", button)
+        if (button && this.enableGrid)
+        {   
+            var spriteSelected = gMaxSpritesGrid.GetSpriteSelectedImgPath();
+            var mouse = this.GetMouseWorldPosition(windowMouse);
+            FF_Utils.Print("Sprite selected "+spriteSelected)
 
-            if (this.enableGrid) 
-            {    
-                var integerCoords = [Math.floor(mouse[0]*(1/this.cellSize)), Math.floor((mouse[1])*(1/this.cellSize))];
-                var coords = [(integerCoords[0] / (1/this.cellSize))+this.cellSize*0.5,
-                              (integerCoords[1] / (1/this.cellSize))+this.cellSize*0.5]; 
+            var int_x_coord = Math.floor(mouse[0]*(1/this.cellSize));
+            var int_y_coord = Math.floor((mouse[1])*(1/this.cellSize));
+            var coords = [(int_x_coord / (1/this.cellSize))+this.cellSize*0.5,
+                          (int_y_coord / (1/this.cellSize))+this.cellSize*0.5]; 
 
-                integerCoords[0] += Math.floor(this.gridDim/2);
-                integerCoords[1] += Math.floor(this.gridDim/2);
+            int_x_coord += Math.floor(this.gridDim/2);
+            int_y_coord += Math.floor(this.gridDim/2);
 
-                print("integer coords "+integerCoords)
-                if (this.gridArray[integerCoords[0]][integerCoords[1]] != null)
-                {   
-                    this.gridArray[integerCoords[0]][integerCoords[1]].Destroy();
-                    this.gridArray[integerCoords[0]][integerCoords[1]] = null;
-                    this.spritesCounter--;
-                }
-                if (!max.shiftkeydown && gPathImgSelected != null)
-                {
-                    this.gridArray[integerCoords[0]][integerCoords[1]] = this.CreateSprite(coords);
-                    this.gridArray[integerCoords[0]][integerCoords[1]].LoadImage(gPathImgSelected);
-                    this.spritesCounter++;    
-                }
+            if (this.gridArray[int_x_coord][int_y_coord] != null &&
+                this.gridArray[int_x_coord][int_y_coord] != 'undefined')
+            {   
+                this.gridArray[int_x_coord][int_y_coord].Destroy();
+                this.gridArray[int_x_coord][int_y_coord] = null;
+                this.spritesCounter--;
             }
+            if (!max.shiftkeydown && spriteSelected != null)
+            {
+                this.gridArray[int_x_coord][int_y_coord] = this.CreateGLSprite(coords);
+                this.gridArray[int_x_coord][int_y_coord].LoadImage(spriteSelected);
+                this.spritesCounter++;    
+            }
+            FF_Utils.Print("how many sprites "+this.spritesCounter);
         }
-        print("how many sprites "+this.spritesCounter);
     }
 
-    this.CreateSprite = function(coords)
+    this.CreateGLSprite = function(coords)
     {   
-        var sprite = 
+        var sprite =    
         {
-            gridShape: new JitterObject("jit.gl.videoplane", gGlobal.worldName),
-            texture: new JitterObject("jit.gl.texture", gGlobal.worldName),
+            gridShape: new JitterObject("jit.gl.videoplane", this.node.name),
+            texture: new JitterObject("jit.gl.texture", this.node.name),
+            body: new JitterObject("jit.phys.body"),
 
             LoadImage: function(imagePath)
             {
@@ -78,6 +103,7 @@ function WindowGrid()
             {
                 this.gridShape.freepeer();
                 this.texture.freepeer();
+                this.body.freepeer();
             }
         }
 
@@ -87,12 +113,34 @@ function WindowGrid()
         sprite.gridShape.dim = [2,2];
         sprite.gridShape.color = [1,1,1,1];
         sprite.gridShape.preserve_aspect = 0;
+        sprite.gridShape.blend_enable = 1;
+        
         sprite.texture.filter = "none";
+
+        sprite.body.position = sprite.gridShape.position.slice();
+        sprite.body.shape = "cube";
+        sprite.body.worldname = gCollisions.GetPhysName();
+        sprite.body.scale = sprite.gridShape.scale.slice();
+        sprite.body.kinematic = 1;
+        FF_Utils.Print("physname "+sprite.body.worldname)
+
         return sprite;
     }
 
-    this.ClearSprites = function()
+    this.Zoom = function(val)
     {
+        this.camera.lens_angle = val+60;
+    }
+
+    this.GetMouseWorldPosition = function(mouse)
+    {
+        return (this.sketch.screentoworld(mouse));
+    }
+
+
+    this.ClearGLSprites = function()
+    {   
+        FF_Utils.Print("Cleaning GL sprites")
         for (var x in this.gridArray)
         {   
             for (var y in this.gridArray[x])
@@ -109,8 +157,13 @@ function WindowGrid()
 
     this.Destroy = function()
     {   
-        print("Cleaning Grid");
-        this.ClearSprites();
+        FF_Utils.Print("Cleaning Grid");
+        this.ClearGLSprites();
         this.gridVisualizer.freepeer();
+        this.sketch.freepeer();
+
+        // this.node.freepeer();
+        // this.vp.freepeer();
+        // this.camera.freepeer();
     }
 }

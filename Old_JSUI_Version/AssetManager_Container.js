@@ -89,7 +89,7 @@ function Container(mg)
         {
             this.scrollBarSlider.isDisplayed = true;
             this.folderUndisplayedPixels = folderSize[1]-gJSUISize[1];
-            print("folder size from check if display scrollbar: "+folderSize)
+            FF_Utils.Print("folder size from check if display scrollbar: "+folderSize)
         }
     }
 

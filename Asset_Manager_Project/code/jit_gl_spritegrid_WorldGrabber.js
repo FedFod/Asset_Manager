@@ -6,7 +6,6 @@ function WorldGrabber()
     this.swaplisten = null;
     this.explicitDrawto = false;
     this.proxy = null;
-    this.dummyNode = new JitterObject("jit.gl.node");
     this.implicitTracker = new JitterObject("jit_gl_implicit");
 
     if (max.version >= 820)
@@ -34,66 +33,53 @@ function WorldGrabber()
         if (this.proxy != undefined)
         {
             this.proxy.name = newDrawto;
+            FF_Utils.Print("proxy name "+this.proxy.name)
 
             if (this.proxy.class !== undefined)
             {
                 if (this.proxy.class != "jit_gl_context_view")
                 {
+                    FF_Utils.Print("proxt class ")
                     this.proxyDrawto = this.proxy.send("getdrawto");
-                    print("proxy drawto 1: "+this.proxyDrawto)
+                    FF_Utils.Print("proxy drawto 1: "+this.proxyDrawto)
                     return this.doSetDrawto(this.proxyDrawto[0]);
                 }
             }
             else {
                 this.proxyDrawto = this.proxy.send("getdrawto");
                 if(this.proxyDrawto !== null && this.proxyDrawto !== undefined) {
-                    print("proxy drawto 2: "+this.proxyDrawto)
+                    FF_Utils.Print("proxy drawto 2: "+this.proxyDrawto)
                     return dosetdrawto(this.proxyDrawto[0]);  // name of the internal node
                 }
             }
         }
         this.drawto = newDrawto;
-        print("drawto: "+this.drawto)
-        this.dummyNode.drawto = this.drawto;
+        FF_Utils.Print("drawto: "+this.drawto)
     
         if(this.swaplisten)
         {
             this.swaplisten.subjectname = "";
         }
         this.swaplisten = new JitterListener(this.drawto, swapcallback);
-        print("swaplisten subject name "+this.swaplisten.subjectname)
+        FF_Utils.Print("swaplisten subject name "+this.swaplisten.subjectname)
     }
 
     this.Destroy = function()
     {   
-        print("Cleaning WorldGrabber");
+        FF_Utils.Print("Cleaning WorldGrabber");
         if (this.proxy != null)
         {
             this.proxy.freepeer();
         }
-        this.dummyNode.freepeer();
         this.implicitTracker.freepeer();
-        this.sketch.freepeer();
     }
 
     // SPECIFIC FUNCTIONS AND PROPS 
 
-    this.sketch = new JitterObject("jit.gl.sketch", gGlobal.worldName);
-
-    this.GetWindowSize = function()
-    {
-        // print(this.dummyNode.dim);
-        return this.dummyNode.dim;
-    }
-
-    this.GetWindowPos = function()
-    {
-        
-    }
-
-    this.GetMouseWorldPos = function(mX, mY)
+    this.GetWorldName = function()
     {   
-        return (this.sketch.screentoworld([mX,mY,0]));
+        return "myWorld";
+        // return this.drawto;
     }
 }
 
@@ -101,25 +87,25 @@ function swapcallback(event){
 	switch (event.eventname) {
 		// if context is root we use swap, if jit.gl.node use draw
 		case ("swap" || "draw"):
-		// RENDER BANG
+		    // RENDER BANG
 			break;
 
 		case "mouse": 
-            // print("mouse "+event.args);
-            gMouseWindowPosition = gWorldGrabber.GetMouseWorldPos(event.args[0], event.args[1]);
-            gWindowGrid.PlaceSprite(gMouseWindowPosition, event.args[2]);
+            // FF_Utils.Print("mouse "+event.args);
+            gMouseWindowPosition = [event.args[0], event.args[1]];
+            gWindowGrid.PlaceGLSprite(gMouseWindowPosition, event.args[2]);
 			break;
 		
 		case "mouseidle":  // Check if mouse is close to vertices to highlight them
-            // print("mouseidle "+event.args);
+            // FF_Utils.Print("mouseidle "+event.args);
 			break;
 
 		case "mouseidleout":
-            // print(event.args);
+            // FF_Utils.Print(event.args);
             break;
 		
 		case "keydown": 
-			print(event.args)
+			// FF_Utils.Print(event.args)
 			break;
 	}
 }

@@ -16,7 +16,8 @@ function Common()
     {
         image: ["png", "PNG", "jpeg", "jpg"],
         movie: ["mov", "avi", "mpeg", "mpg", "mp4"],
-        sound: ["wav", "mp3"]
+        sound: ["wav", "mp3"],
+        obj:   ["obj", "dae"]
     }
 }
 

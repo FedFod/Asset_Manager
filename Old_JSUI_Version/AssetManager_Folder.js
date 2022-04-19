@@ -28,7 +28,7 @@ function FolderManager()
 
     this.LoadFolder = function(path)
     {   
-        print("called LoadFolder")
+        FF_Utils.Print("called LoadFolder")
         this.folderPath = path;
         this.filePaths = [];
         this.folder = new Folder(path);
@@ -39,7 +39,7 @@ function FolderManager()
             if (this.folder.filename.length > 0)
             {
                 this.filePaths.push(path+this.folder.filename);
-                // print(this.filePaths[this.filePaths.length-1]);
+                // FF_Utils.Print(this.filePaths[this.filePaths.length-1]);
             }
             this.folder.next();
         }
@@ -49,7 +49,7 @@ function FolderManager()
 
     this.SortFolder = function()
     {   
-        print("called SortFolder")
+        FF_Utils.Print("called SortFolder")
 
         this.DestroyImages();
 
@@ -80,7 +80,7 @@ function FolderManager()
                                 this.filesArray[this.filesArray.length-1].type = "sound";
                                 break;
                             default:
-                                print("no type found");
+                                FF_Utils.Print("no type found");
                         }
                         break;
                     }
@@ -91,8 +91,8 @@ function FolderManager()
 
     this.DisplayFolder = function()
     {   
-        print("called DisplayFolder")
-        print("how many files "+this.filesArray.length)
+        FF_Utils.Print("called DisplayFolder")
+        FF_Utils.Print("how many files "+this.filesArray.length)
 
         this.InitMG();
         this.FreeOffScreenBuffer();
@@ -122,7 +122,7 @@ function FolderManager()
         this.columnsRows[0] = Math.max(0, this.columnsRows[0]);
 
         this.columnsRows[1] = Math.ceil(this.filesArray.length / this.columnsRows[0]);
-        print("Asset manager columns and rows: "+this.columnsRows);
+        FF_Utils.Print("Asset manager columns and rows: "+this.columnsRows);
     }
 
     this.CalcFolderSize = function()
@@ -237,7 +237,7 @@ function FolderManager()
 
     this.DestroyImages = function()
     {   
-        print("Called DestroyFiles");
+        FF_Utils.Print("Called DestroyFiles");
 
         for (var image in this.filesArray)
         {
@@ -271,6 +271,6 @@ function FolderManager()
         this.DestroyImages();
         this.FreeOffScreenBuffer();
         this.ResetClicked();
-        print("Everything freed");
+        FF_Utils.Print("Everything freed");
     }
 }
