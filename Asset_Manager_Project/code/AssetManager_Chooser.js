@@ -55,7 +55,8 @@ function Chooser(parentPatcher)
         if (this.chooser)
         {   
             this.p.script("sendbox",this.chooser.varname,"patching_rect", [textPos[0], textPos[1], imageSize[0]+this.spriteBorderSize, imageSize[1]+this.spriteBorderSize*2]);
-            this.p.script("bringtofront", this.chooser.varname);
+            //this.p.script("bringtofront", this.chooser.varname);
+            this.p.script("sendtoback", this.chooser.varname);
         }
     }
 

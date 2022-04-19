@@ -58,7 +58,7 @@ function MaxSpritesGrid(gP, gPP)
 
         selSpr.PlayMovie();
 
-        this.title.set(this.spriteSelectedImagePath+ "    " + selSpr.GetFileDim()[0] + " x "+selSpr.GetFileDim()[1]);
+        this.title.set("\""+this.spriteSelectedImagePath+"\""+ "    " + selSpr.GetFileDim()[0] + " x "+selSpr.GetFileDim()[1]);
     }
 
     this.GetSpriteSelectedImgPath = function()

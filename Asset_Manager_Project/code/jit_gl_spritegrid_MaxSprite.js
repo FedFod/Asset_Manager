@@ -21,13 +21,25 @@ function Sprite(id, patcher, filePath, patcherSize, textHeight)
         fpic = this.p.newdefault(0, 0, "fpic");
         fpic.autofit(1);
         fpic.forceaspect(1);
+        fpic.ignoreclick = (1);
         return fpic;
     }
 
     this.CreatePwindow = function()
     {
         pwindow = this.p.newdefault(0, 0, "jit.pwindow");
+        pwindow.ignoreclick = (1);
         return pwindow;
+    }
+
+    this.CreatePlayStopButton = function()
+    {
+        var playStopButton = this.p.newdefault(0,0,"pictctrl");
+        playStopButton.varname = "spritegrid_playButton";
+        var rectangle = [10, this.fpicSize[1]-20,30,30];
+        this.p.script("sendbox", playStopButton.varname, "patching_rect", rectangle.slice());
+        this.p.script("bringtofront", playStopButton.varname);
+        return playStopButton;
     }
 
     var extension = filePath.split('.').pop();
@@ -58,6 +70,7 @@ function Sprite(id, patcher, filePath, patcherSize, textHeight)
                         this.fpic = this.CreatePwindow();
                         this.imgMat.importmovie(filePath);
                         this.videoPlayer = new VideoPlayer(filePath);
+                        this.playStopButton = this.CreatePlayStopButton();
 
                         var PlayMovieCallback = (function() {
                             this.videoPlayer.LoadNewFrame();
@@ -68,7 +81,7 @@ function Sprite(id, patcher, filePath, patcherSize, textHeight)
                         // usare le texture per jit.movie
                         this.videoTsk = new Task(PlayMovieCallback, this);
                         this.videoTsk.interval = 33;
-                        this.videoTsk.repeat(1);
+                        this.videoTsk.repeat(1); // fai una volta per visualizzare primo frame
                         break;
                     default:
                         this.fpic = this.CreateFpic();
@@ -128,11 +141,13 @@ function Sprite(id, patcher, filePath, patcherSize, textHeight)
         highlightPanel.bgfillcolor([0,0,0,0]);
         highlightPanel.border(this.panelBorderSize);
         highlightPanel.bordercolor([0,0,0,1]);
+        highlightPanel.ignoreclick = 1;
         var rectangle = [0,0, this.width+this.panelBorderSize*2, this.fpicSize[1]+this.panelBorderSize*2];
         this.p.script("sendbox", highlightPanel.varname, "patching_rect", rectangle.slice());
-        this.p.script("bringtoback", highlightPanel.varname);
+        this.p.script("sendtoback", highlightPanel.varname);
         return highlightPanel;
     }
+
 
     this.text = this.CreateText();
     this.highlightPanel = this.CreatePanel();
@@ -150,9 +165,11 @@ function Sprite(id, patcher, filePath, patcherSize, textHeight)
     this.Highlight = function(val)
     {   
         this.highlightPanel.bordercolor([0,0,0,1]);
+        this.button.ignoreclick = 0;
         if (val)
         {
             this.highlightPanel.bordercolor([0,0.7,1,1]);
+            this.button.ignoreclick = 1;
         }
     }
 
@@ -206,6 +223,7 @@ function Sprite(id, patcher, filePath, patcherSize, textHeight)
 
 function ButtonCallback(data)
 {   
+    FF_Utils.Print("Button Callback");
     FF_Utils.Print(data.value)
     FF_Utils.Print(data.attrname)
     gMaxSpritesGrid.SetSpriteSelected(data.maxobject.spriteID);

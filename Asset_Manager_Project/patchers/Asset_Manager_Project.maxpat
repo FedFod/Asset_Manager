@@ -40,17 +40,19 @@
 		"assistshowspatchername" : 0,
 		"boxes" : [ 			{
 				"box" : 				{
-					"fontface" : 0,
-					"fontname" : "Arial",
-					"fontsize" : 12.0,
-					"id" : "obj-38",
-					"items" : "<empty>",
-					"maxclass" : "chooser",
+					"frames" : 1,
+					"id" : "obj-23",
+					"inactiveimage" : 1,
+					"maxclass" : "pictctrl",
+					"mode" : 1,
+					"multiplier" : 1,
+					"name" : "greenLED.png",
 					"numinlets" : 1,
-					"numoutlets" : 6,
-					"outlettype" : [ "", "", "", "", "", "" ],
+					"numoutlets" : 1,
+					"outlettype" : [ "int" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 632.59257185459137, 154.977433145046234, 100.0, 100.0 ]
+					"patching_rect" : [ 698.0, 294.0, 22.0, 23.0 ],
+					"tracking" : 1
 				}
 
 			}
@@ -606,7 +608,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"offset" : [ 0.0, 0.0 ],
-					"patching_rect" : [ 47.0, 296.75, 579.0, 320.25 ],
+					"patching_rect" : [ 47.0, 283.212021112442017, 558.101691842079163, 464.063560307025909 ],
 					"viewvisibility" : 1
 				}
 
@@ -1247,6 +1249,12 @@
 				"name" : "cat_face.png",
 				"bootpath" : "D:/MyData/My_Files/Assets/TestFolder",
 				"patcherrelativepath" : "../../../../../My_Files/Assets/TestFolder",
+				"type" : "PNG",
+				"implicit" : 1
+			}
+, 			{
+				"name" : "greenLED.png",
+				"bootpath" : "C74:/media/max/picts",
 				"type" : "PNG",
 				"implicit" : 1
 			}

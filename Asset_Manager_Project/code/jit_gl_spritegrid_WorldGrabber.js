@@ -39,7 +39,7 @@ function WorldGrabber()
             {
                 if (this.proxy.class != "jit_gl_context_view")
                 {
-                    FF_Utils.Print("proxt class ")
+                    FF_Utils.Print("proxy class");
                     this.proxyDrawto = this.proxy.send("getdrawto");
                     FF_Utils.Print("proxy drawto 1: "+this.proxyDrawto)
                     return this.doSetDrawto(this.proxyDrawto[0]);
