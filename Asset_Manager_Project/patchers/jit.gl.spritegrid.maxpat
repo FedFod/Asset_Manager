@@ -40,6 +40,18 @@
 		"assistshowspatchername" : 0,
 		"boxes" : [ 			{
 				"box" : 				{
+					"id" : "obj-7",
+					"maxclass" : "comment",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 10.0, 0.0, 1000.0, 20.0 ],
+					"textcolor" : [ 1.0, 1.0, 1.0, 1.0 ],
+					"varname" : "spritegrid_title"
+				}
+
+			}
+, 			{
+				"box" : 				{
 					"comment" : "",
 					"hidden" : 1,
 					"id" : "obj-4",
@@ -68,8 +80,20 @@
 					"numoutlets" : 1,
 					"offset" : [ 0.0, 0.0 ],
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 0.0, 22.0, 583.0, 331.0 ],
+					"patching_rect" : [ 0.0, 20.0, 558.0, 444.0 ],
 					"viewvisibility" : 1
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-3",
+					"maxclass" : "panel",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 0.0, 0.0, 568.0, 20.0 ],
+					"rounded" : 0,
+					"varname" : "spritegrid_titlePanel"
 				}
 
 			}

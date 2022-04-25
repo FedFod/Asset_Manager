@@ -8,6 +8,8 @@ include("jit_gl_spritegrid_MaxSpritesGrid.js");
 include("jit_gl_spritegrid_Collisions.js");
 include("AssetManager_Common.js");
 include("AssetManager_Chooser.js");
+include("jit_gl_spritegrid_LocalWorld.js");
+
 
 var gP = this.patcher;
 var gPP = this.patcher.parentpatcher;
@@ -29,6 +31,8 @@ var gCollisions = new Collisions();
 
 var bpatcherInitialSize = [500, 400];
 var gBPSize = [0,0];
+
+var gWorldName = "";
 
 // PUBLIC FUNCTIONS ---------------
 function load_folder(path)
@@ -108,6 +112,13 @@ function SetBpatcherInitialSize()
     this.patcher.box.rect = [0,20, bpatcherInitialSize[0], bpatcherInitialSize[1]];
 }
 
+function set_world_name(name)
+{
+    gWorldName = name;
+    AssignProxyLocalWorld(name)
+    FF_Utils.Print("WorldName: "+gWorldName);
+}
+
 function notifydeleted()
 {   
     FF_Utils.Print("Cleaning spritegrid")
@@ -115,5 +126,6 @@ function notifydeleted()
     gWindowGrid.Destroy();
     gWorldGrabber.Destroy();
     gCollisions.Destroy();
+    DestroyLocalWorld();
 }
 

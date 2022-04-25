@@ -10,7 +10,7 @@
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 34.0, 77.0, 1544.0, 929.0 ],
+		"rect" : [ 2584.0, 814.0, 1399.0, 929.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 12.0,
@@ -40,6 +40,68 @@
 		"assistshowspatchername" : 0,
 		"boxes" : [ 			{
 				"box" : 				{
+					"id" : "obj-31",
+					"maxclass" : "newobj",
+					"numinlets" : 1,
+					"numoutlets" : 2,
+					"outlettype" : [ "jit_matrix", "" ],
+					"patching_rect" : [ 691.5, 408.0, 372.0, 22.0 ],
+					"text" : "jit.gl.model @file D:/MyData/My_Files/Assets/TestFolder/rock_08.obj"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-24",
+					"linecount" : 3,
+					"maxclass" : "comment",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 513.0, 209.0, 219.0, 48.0 ],
+					"text" : "- fixare bug quando si carica\n- assegnare durata suono invece di dim\n- fare visualizzatore oggetti 3D"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-22",
+					"maxclass" : "toggle",
+					"numinlets" : 1,
+					"numoutlets" : 1,
+					"outlettype" : [ "int" ],
+					"parameter_enable" : 0,
+					"patching_rect" : [ 778.0, 285.355901718139648, 24.0, 24.0 ]
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"clickedimage" : 1,
+					"id" : "obj-17",
+					"maxclass" : "pictctrl",
+					"numinlets" : 1,
+					"numoutlets" : 1,
+					"outlettype" : [ "int" ],
+					"parameter_enable" : 0,
+					"patching_rect" : [ 886.0, 289.0, 20.0, 20.0 ]
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"autofit" : 1,
+					"id" : "obj-5",
+					"maxclass" : "fpic",
+					"numinlets" : 1,
+					"numoutlets" : 1,
+					"outlettype" : [ "jit_matrix" ],
+					"patching_rect" : [ 770.0, 339.0, 88.0, 50.0 ],
+					"pic" : "D:/MyData/My_Files/Assets/TestFolder/1_3.png"
+				}
+
+			}
+, 			{
+				"box" : 				{
 					"frames" : 1,
 					"id" : "obj-23",
 					"inactiveimage" : 1,
@@ -51,7 +113,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "int" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 698.0, 294.0, 22.0, 23.0 ],
+					"patching_rect" : [ 778.0, 195.0, 88.0, 76.0 ],
 					"tracking" : 1
 				}
 
@@ -87,7 +149,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 2,
 					"outlettype" : [ "jit_matrix", "" ],
-					"patching_rect" : [ 762.5, 614.0, 247.0, 212.0 ],
+					"patching_rect" : [ 705.722223460674286, 616.962962865829468, 247.0, 212.0 ],
 					"sync" : 1
 				}
 
@@ -254,7 +316,7 @@
  ]
 					}
 ,
-					"patching_rect" : [ 224.0, 864.0, 147.0, 22.0 ],
+					"patching_rect" : [ 234.5, 879.0, 147.0, 22.0 ],
 					"saved_object_attributes" : 					{
 						"description" : "",
 						"digest" : "",
@@ -273,7 +335,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 72.0, 860.0, 134.0, 22.0 ]
+					"patching_rect" : [ 82.5, 875.0, 134.0, 22.0 ]
 				}
 
 			}
@@ -296,7 +358,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 2,
 					"outlettype" : [ "", "" ],
-					"patching_rect" : [ 51.0, 822.0, 82.0, 22.0 ],
+					"patching_rect" : [ 61.5, 837.0, 82.0, 22.0 ],
 					"text" : "route collision"
 				}
 
@@ -608,7 +670,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"offset" : [ 0.0, 0.0 ],
-					"patching_rect" : [ 47.0, 283.212021112442017, 558.101691842079163, 464.063560307025909 ],
+					"patching_rect" : [ 42.0, 298.612318128347397, 558.101691842079163, 464.063560307025909 ],
 					"viewvisibility" : 1
 				}
 
@@ -695,7 +757,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 1403.5, 87.375, 188.0, 22.0 ]
+					"patching_rect" : [ 572.5, 87.375, 188.0, 22.0 ]
 				}
 
 			}
@@ -792,7 +854,7 @@
 			}
 , 			{
 				"box" : 				{
-					"attr" : "drawto",
+					"attr" : "output_texture",
 					"id" : "obj-16",
 					"maxclass" : "attrui",
 					"numinlets" : 1,
@@ -800,6 +862,19 @@
 					"outlettype" : [ "" ],
 					"parameter_enable" : 0,
 					"patching_rect" : [ 802.5, 488.0, 150.0, 22.0 ]
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"attr" : "automatic",
+					"id" : "obj-28",
+					"maxclass" : "attrui",
+					"numinlets" : 1,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"parameter_enable" : 0,
+					"patching_rect" : [ 840.5, 535.0, 150.0, 22.0 ]
 				}
 
 			}
@@ -885,6 +960,20 @@
 				"patchline" : 				{
 					"destination" : [ "obj-21", 0 ],
 					"source" : [ "obj-20", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-22", 0 ],
+					"source" : [ "obj-23", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-20", 0 ],
+					"source" : [ "obj-28", 0 ]
 				}
 
 			}

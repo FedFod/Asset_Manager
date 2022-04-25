@@ -3,7 +3,7 @@ function MaxSpritesGrid(gP, gPP)
     this.spriteObjects = [];
     this.p = gP;
     this.pp = gPP;
-    this.spriteSize = [50, 50];
+    this.spriteSize = [88, 50];
 
     this.folder = null;
     this.filePaths = [];
@@ -56,9 +56,26 @@ function MaxSpritesGrid(gP, gPP)
 
         this.chooser.AssignToSprite(selSpr);
 
-        selSpr.PlayMovie();
+        //selSpr.PlayMovie();
 
+        this.SetTitleBar(selSpr);
+    }
+
+    this.SetTitleBar = function(selSpr)
+    {
         this.title.set("\""+this.spriteSelectedImagePath+"\""+ "    " + selSpr.GetFileDim()[0] + " x "+selSpr.GetFileDim()[1]);
+    }
+
+    this.PlayMovieSelectedSprite = function()
+    {   
+        // if (this.spriteSelectedID != -1)
+        // {
+        //     var selSpr = this.spriteObjects[this.spriteSelectedID];
+        //     selSpr.PlayMovie();
+        // }
+        for (var sprite in this.spriteObjects) {
+            this.spriteObjects[sprite].PlayMovie();
+        }
     }
 
     this.GetSpriteSelectedImgPath = function()

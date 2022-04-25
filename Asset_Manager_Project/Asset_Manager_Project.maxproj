@@ -2,7 +2,7 @@
 	"name" : "Asset_Manager_Project",
 	"version" : 1,
 	"creationdate" : 3725363105,
-	"modificationdate" : 3733226129,
+	"modificationdate" : 3733590233,
 	"viewrect" : [ 349.0, 339.0, 300.0, 500.0 ],
 	"autoorganize" : 1,
 	"hideprojectwindow" : 0,
@@ -83,6 +83,11 @@
 			}
 ,
 			"jit_gl_spritegrid_Collisions.js" : 			{
+				"kind" : "javascript",
+				"local" : 1
+			}
+,
+			"jit_gl_spritegrid_LocalWorld.js" : 			{
 				"kind" : "javascript",
 				"local" : 1
 			}

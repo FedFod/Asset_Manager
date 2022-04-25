@@ -21,3 +21,11 @@ function Common()
     }
 }
 
+function Log_Info(message, value)
+{   
+    if (value != undefined) {
+        FF_Utils.Print(message +": "+value);
+    } else {
+        FF_Utils.Print(message);
+    }
+}

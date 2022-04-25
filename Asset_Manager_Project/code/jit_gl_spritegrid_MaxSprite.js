@@ -20,7 +20,7 @@ function Sprite(id, patcher, filePath, patcherSize, textHeight)
     {
         fpic = this.p.newdefault(0, 0, "fpic");
         fpic.autofit(1);
-        fpic.forceaspect(1);
+        fpic.forceaspect(0);
         fpic.ignoreclick = (1);
         return fpic;
     }
@@ -32,17 +32,41 @@ function Sprite(id, patcher, filePath, patcherSize, textHeight)
         return pwindow;
     }
 
+    var PlayButtonCallback = (function(data)
+    {
+        Log_Info("Play button", data.value);
+        this.videoPlayer.shouldPlay = data.value;
+        if (data.value) {
+            this.videoPlayer.isPlaying = true;
+        }
+    }).bind(this);
+
     this.CreatePlayStopButton = function()
     {
         var playStopButton = this.p.newdefault(0,0,"pictctrl");
+        playStopButton.name("greenLED.png");
+        playStopButton.mode(1);
+        playStopButton.tracking(1);
+        playStopButton.inactiveimage(1);
         playStopButton.varname = "spritegrid_playButton";
-        var rectangle = [10, this.fpicSize[1]-20,30,30];
+        var rectangle = [0, this.fpicSize[1]-20,15,15];
         this.p.script("sendbox", playStopButton.varname, "patching_rect", rectangle.slice());
         this.p.script("bringtofront", playStopButton.varname);
+
+        this.playButtonListener = new MaxobjListener(playStopButton, PlayButtonCallback);
         return playStopButton;
     }
 
-    var extension = filePath.split('.').pop();
+    this.GetSingleMatrixFrameFromMovie = function() 
+    {
+        this.videoPlayer.SetOutputTexture(false);
+        this.videoPlayer.LoadNewFrame();
+        this.fpic.jit_matrix(this.videoPlayer.GetMatrixName());
+        this.videoPlayer.SetOutputTexture(true);
+        Log_Info("Get single matrix frame")
+    }
+
+    var extension = FF_Utils.GetFileExtensionFromPath(filePath); //filePath.split('.').pop();
     for (var type in gCommon.FileTypes)
     {   
         var fileType = gCommon.FileTypes[type];
@@ -54,34 +78,26 @@ function Sprite(id, patcher, filePath, patcherSize, textHeight)
                 switch (type) 
                 {
                     case "image":
-                        FF_Utils.Print("is image")
+                        // FF_Utils.Print("is image")
                         this.fpic = this.CreateFpic();
                         this.fpic.read(filePath);
                         this.imgMat.importmovie(filePath);
                         break;
                     case "sound":
-                        FF_Utils.Print("is sound")
+                        // FF_Utils.Print("is sound")
                         this.fpic = this.CreateFpic();
                         this.fpic.read("SpeakerIcon.png");
                         this.imgMat.importmovie("SpeakerIcon.png");
                         break;
                     case "movie":
-                        FF_Utils.Print("is movie")
+                        // FF_Utils.Print("is movie")
                         this.fpic = this.CreatePwindow();
                         this.imgMat.importmovie(filePath);
                         this.videoPlayer = new VideoPlayer(filePath);
                         this.playStopButton = this.CreatePlayStopButton();
 
-                        var PlayMovieCallback = (function() {
-                            this.videoPlayer.LoadNewFrame();
-                            this.fpic.jit_matrix(this.videoPlayer.GetMatrixName());
-                        }).bind(this);
+                        this.GetSingleMatrixFrameFromMovie();
 
-                        // questo dovrebbe essere su draw swap così si possono
-                        // usare le texture per jit.movie
-                        this.videoTsk = new Task(PlayMovieCallback, this);
-                        this.videoTsk.interval = 33;
-                        this.videoTsk.repeat(1); // fai una volta per visualizzare primo frame
                         break;
                     default:
                         this.fpic = this.CreateFpic();
@@ -95,24 +111,29 @@ function Sprite(id, patcher, filePath, patcherSize, textHeight)
 
     this.ratio = this.imgMat.dim[0] / this.imgMat.dim[1];
 
-    this.width = Math.max(this.fpicSize[0]*this.ratio, this.fpicSize[0]);
-    this.height = this.fpicSize[0];
+    this.width = 88;//Math.max(this.fpicSize[0]*this.ratio, this.fpicSize[0]);
+    this.height = 50;//this.fpicSize[0];
 
     this.fpic.varname = "spritegrid_fpic_";
-    var rectangle = [0, 0, this.width, this.fpicSize[1]];
+    var rectangle = [0, 0, this.width, this.height];
     this.p.script("sendbox", this.fpic.varname, "patching_rect", rectangle.slice());
 
-    this.button = this.p.newdefault(0,0, "ubutton");
-    this.button.varname = "ubutton_";
-    this.button.hilite(0);
-    this.button.toggle(1);
-    rectangle = [0, 0, this.width, this.fpicSize[1]+this.textYOffset+this.textHeight];
-    this.p.script("sendbox", this.button.varname, "patching_rect", rectangle.slice());
-    this.p.script("bringtofront", this.button.varname);
+    this.CreateUButton = function()
+    {
+        this.button = this.p.newdefault(0,0, "ubutton");
+        this.button.varname = "ubutton_";
+        this.button.hilite(0);
+        this.button.toggle(1);
+        rectangle = [0, 0, this.width, this.height+this.textYOffset+this.textHeight];
+        this.p.script("sendbox", this.button.varname, "patching_rect", rectangle.slice());
+        this.p.script("bringtofront", this.button.varname);
+    
+        this.button.spriteID = this.ID;
+    
+        this.buttonListener = new MaxobjListener(this.button, ButtonCallback);
+    }
 
-    this.button.spriteID = this.ID;
-
-    this.buttonListener = new MaxobjListener(this.button, ButtonCallback);
+    this.CreateUButton();
 
     this.GetFileDim = function()
     {
@@ -124,7 +145,11 @@ function Sprite(id, patcher, filePath, patcherSize, textHeight)
         var text = this.p.newdefault(0,0, "comment");
         text.varname = "txt_";
         text.fontsize(10);
-        text.setwithtruncation(this.filePath.replace(/^.*[\\\/]/, ''), this.width-10, "");
+        if (this.videoPlayer != null) {
+            text.setwithtruncation("   "+FF_Utils.GetFileNameFromPath(this.filePath), this.width-13, "");
+        } else {
+            text.setwithtruncation(FF_Utils.GetFileNameFromPath(this.filePath), this.width-10, "");
+        }
         text.textjustification(1);
         text.bgcolor([0.3,0.3,0.3,1]);
         text.textcolor([0.95,0.95,0.95,1]);
@@ -148,7 +173,6 @@ function Sprite(id, patcher, filePath, patcherSize, textHeight)
         return highlightPanel;
     }
 
-
     this.text = this.CreateText();
     this.highlightPanel = this.CreatePanel();
     
@@ -166,8 +190,11 @@ function Sprite(id, patcher, filePath, patcherSize, textHeight)
     {   
         this.highlightPanel.bordercolor([0,0,0,1]);
         this.button.ignoreclick = 0;
-        if (val)
-        {
+        // if (this.videoPlayer != null) {
+        //     this.videoPlayer.shouldPlay = false;
+        //     this.playStopButton.set(0);
+        // }
+        if (val) {
             this.highlightPanel.bordercolor([0,0.7,1,1]);
             this.button.ignoreclick = 1;
         }
@@ -176,18 +203,19 @@ function Sprite(id, patcher, filePath, patcherSize, textHeight)
     this.PlayMovie = function()
     {
         if (this.videoPlayer != null)
-        {
-            if (!this.videoPlayer.isPlaying)
-            {
-                this.videoPlayer.isPlaying = 1;
-                this.videoTsk.repeat();
-                FF_Utils.Print("repeat")
-            }
-            else 
-            {
-                this.videoPlayer.isPlaying = 0;
-                this.videoTsk.cancel();
-                FF_Utils.Print("cancel")
+        {   
+            if (this.videoPlayer.shouldPlay) {
+                this.videoPlayer.LoadNewFrame();
+                this.fpic.jit_gl_texture(this.videoPlayer.GetTextureName());
+            } else if (!this.videoPlayer.shouldPlay && this.videoPlayer.isPlaying) {
+                var fpicRect = this.fpic.rect.slice();
+                this.p.remove(this.fpic);
+                this.fpic = this.CreatePwindow();
+                this.fpic.rect = fpicRect;
+
+                this.GetSingleMatrixFrameFromMovie();
+                
+                this.videoPlayer.isPlaying = false;
             }
         }
     }
@@ -198,6 +226,9 @@ function Sprite(id, patcher, filePath, patcherSize, textHeight)
         this.p.script("sendbox", this.button.varname, "patching_position", [pos[0], pos[1]]);
         this.p.script("sendbox", this.text.varname, "patching_position",   [pos[0]-this.panelBorderSize, pos[1]+this.fpicSize[1]+this.textYOffset]);
         this.p.script("sendbox", this.highlightPanel.varname, "patching_position",   [pos[0]-this.panelBorderSize, pos[1]-this.panelBorderSize]);
+        if (this.videoPlayer != null) {
+            this.p.script("sendbox", this.playStopButton.varname, "patching_position",   [pos[0]-this.panelBorderSize, pos[1]+this.fpicSize[1]+3]);
+        }
     }
 
     this.GetRect = function()
@@ -212,10 +243,13 @@ function Sprite(id, patcher, filePath, patcherSize, textHeight)
         this.p.remove(this.text);
         this.p.remove(this.button);
         this.p.remove(this.highlightPanel);
+        this.p.remove(this.playStopButton);
+
         this.imgMat.freepeer();
-        if (this.videoPlayer != null)
-        {
+        if (this.videoPlayer != null) {
             this.videoPlayer.Destroy();
+        }
+        if (this.videoTsk != null) {
             this.videoTsk.freepeer();
         }
     }
@@ -223,9 +257,7 @@ function Sprite(id, patcher, filePath, patcherSize, textHeight)
 
 function ButtonCallback(data)
 {   
-    FF_Utils.Print("Button Callback");
-    FF_Utils.Print(data.value)
-    FF_Utils.Print(data.attrname)
     gMaxSpritesGrid.SetSpriteSelected(data.maxobject.spriteID);
-    FF_Utils.Print("sprite selected "+data.maxobject.spriteID);
+    // FF_Utils.Print("sprite selected "+data.maxobject.spriteID);
 }
+
